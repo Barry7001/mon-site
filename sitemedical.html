@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VIVO & VEEZ | Système Médical IA</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --vivo-red: #e60000;
+            --vivo-dark: #0a0a0a;
+            --veez-blue: #0050b3;
+            --veez-silver: #c0c0c0;
+            --light-gradient: linear-gradient(135deg, #ff6b6b, #e60000);
+            --blue-gradient: linear-gradient(135deg, #00b0ff, #0050b3);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: #f5f7fa;
+            color: #333;
+            overflow-x: hidden;
+        }
+        
+        /* Header Styles */
+        header {
+            background: var(--vivo-dark);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .vivo-logo {
+            width: 45px;
+            height: 45px;
+            background: var(--light-gradient);
+            clip-path: polygon(0 0, 100% 50%, 0 100%);
+            position: relative;
+        }
+        
+        .vivo-logo::after {
+            content: "";
+            position: absolute;
+            top: 15%;
+            left: 30%;
+            width: 40%;
+            height: 40%;
+            background: var(--vivo-dark);
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(230, 0, 0, 0.7);
+        }
+        
+        .veez-logo {
+            width: 45px;
+            height: 45px;
+            background: var(--blue-gradient);
+            clip-path: polygon(50% 0, 100% 100%, 0 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .veez-logo::before {
+            content: "";
+            position: absolute;
+            top: 15%;
+            left: 15%;
+            width: 70%;
+            height: 70%;
+            border: 3px solid var(--veez-silver);
+            border-radius: 50%;
+        }
+        
+        .logo-text {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(to right, var(--vivo-red), var(--veez-blue));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        nav ul {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+        
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.1rem;
+            transition: color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        nav a:hover {
+            color: var(--vivo-red);
+        }
+        
+        .user-actions {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .btn {
+            padding: 0.6rem 1.5rem;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+            font-size: 1rem;
+        }
+        
+        .btn-login {
+            background: transparent;
+            color: #fff;
+            border: 2px solid #fff;
+        }
+        
+        .btn-login:hover {
+            background: #fff;
+            color: var(--vivo-dark);
+        }
+        
+        .btn-signup {
+            background: var(--light-gradient);
+            color: white;
+        }
+        
+        .btn-signup:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(230, 0, 0, 0.4);
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(10, 10, 10, 0.85), rgba(10, 10, 10, 0.9)), 
+                        url('https://images.unsplash.com/photo-1576091160550-2173dba999ef?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 6rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-content {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+        
+        .hero p {
+            font-size: 1.4rem;
+            max-width: 700px;
+            margin: 0 auto 2.5rem;
+            color: #e0e0e0;
+        }
+        
+        .hero-btns {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+        
+        .btn-vivo {
+            background: var(--light-gradient);
+            color: white;
+            font-size: 1.1rem;
+            padding: 0.9rem 2.5rem;
+        }
+        
+        .btn-veez {
+            background: var(--blue-gradient);
+            color: white;
+            font-size: 1.1rem;
+            padding: 0.9rem 2.5rem;
+        }
+        
+        .btn-vivo:hover, .btn-veez:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Features Section */
+        .features {
+            padding: 6rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(to right, var(--vivo-red), var(--veez-blue));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .section-title p {
+            font-size: 1.2rem;
+            color: #666;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+        }
+        
+        .feature-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .feature-icon {
+            height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+        }
+        
+        .vivo-feature .feature-icon {
+            background: linear-gradient(135deg, rgba(230,0,0,0.1), rgba(230,0,0,0.2));
+            color: var(--vivo-red);
+        }
+        
+        .veez-feature .feature-icon {
+            background: linear-gradient(135deg, rgba(0,80,179,0.1), rgba(0,80,179,0.2));
+            color: var(--veez-blue);
+        }
+        
+        .feature-content {
+            padding: 2rem;
+        }
+        
+        .feature-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .feature-content p {
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        /* Medical Dashboard */
+        .dashboard {
+            background: linear-gradient(to bottom, #f0f4f8, #e6eef7);
+            padding: 6rem 2rem;
+        }
+        
+        .dashboard-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
+        }
+        
+        .dashboard-header {
+            background: var(--vivo-dark);
+            color: white;
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .dashboard-header h2 {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .dashboard-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+        }
+        
+        .vivo-section, .veez-section {
+            padding: 2.5rem;
+        }
+        
+        .vivo-section {
+            border-right: 1px solid #eee;
+        }
+        
+        .form-group {
+            margin-bottom: 1.8rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #444;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 0.9rem 1.2rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border 0.3s;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--vivo-red);
+            box-shadow: 0 0 0 3px rgba(230, 0, 0, 0.1);
+        }
+        
+        .symptoms-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .symptom-tag {
+            background: #f8f9fa;
+            border: 1px solid #ddd;
+            padding: 0.6rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+        }
+        
+        .symptom-tag:hover, .symptom-tag.active {
+            background: var(--vivo-red);
+            color: white;
+            border-color: var(--vivo-red);
+        }
+        
+        .btn-submit {
+            background: var(--light-gradient);
+            color: white;
+            font-size: 1.1rem;
+            padding: 1rem 2rem;
+            width: 100%;
+            margin-top: 1rem;
+        }
+        
+        .results {
+            background: #f9fafb;
+            border-radius: 10px;
+            padding: 2rem;
+            margin-top: 2rem;
+            border-left: 4px solid var(--vivo-red);
+        }
+        
+        .results h3 {
+            margin-bottom: 1.5rem;
+            color: var(--vivo-red);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .prescription {
+            background: #f0f7ff;
+            border-radius: 10px;
+            padding: 2rem;
+            margin-top: 2rem;
+            border-left: 4px solid var(--veez-blue);
+        }
+        
+        .prescription h3 {
+            margin-bottom: 1.5rem;
+            color: var(--veez-blue);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .prescription-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.8rem 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--vivo-dark);
+            color: #aaa;
+            padding: 4rem 2rem 2rem;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+        }
+        
+        .footer-logo {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(to right, var(--vivo-red), var(--veez-blue));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .footer-section h4 {
+            color: white;
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-links a {
+            color: #aaa;
+            text-decoration: none;
+            transition: color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .footer-links a:hover {
+            color: white;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 3rem;
+            margin-top: 3rem;
+            border-top: 1px solid #333;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .dashboard-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .vivo-section {
+                border-right: none;
+                border-bottom: 1px solid #eee;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 1rem;
+            }
+            
+            nav ul {
+                gap: 1rem;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .hero-btns {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo-container">
+            <div class="vivo-logo"></div>
+            <div class="veez-logo"></div>
+            <div class="logo-text">VIVO & VEEZ</div>
+        </div>
+        
+        <nav>
+            <ul>
+                <li><a href="#"><i class="fas fa-home"></i> Accueil</a></li>
+                <li><a href="#features"><i class="fas fa-star"></i> Fonctionnalités</a></li>
+                <li><a href="#dashboard"><i class="fas fa-medkit"></i> Services</a></li>
+                <li><a href="#"><i class="fas fa-users"></i> Équipe</a></li>
+                <li><a href="#"><i class="fas fa-envelope"></i> Contact</a></li>
+            </ul>
+        </nav>
+        
+        <div class="user-actions">
+            <button class="btn btn-login">Connexion</button>
+            <button class="btn btn-signup">Inscription</button>
+        </div>
+    </header>
+    
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Révolution Médicale par Intelligence Artificielle</h1>
+            <p>VIVO pour le diagnostic avancé et VEEZ pour l'optimisation du parcours patient - Une solution complète pour les professionnels de santé</p>
+            
+            <div class="hero-btns">
+                <button class="btn btn-vivo"><i class="fas fa-brain"></i> VIVO Diagnostic</button>
+                <button class="btn btn-veez"><i class="fas fa-bolt"></i> VEEZ Accélération</button>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="section-title">
+            <h2>Nos Technologies Innovantes</h2>
+            <p>Découvrez comment VIVO et VEEZ transforment l'expérience médicale grâce à l'intelligence artificielle</p>
+        </div>
+        
+        <div class="features-grid">
+            <div class="feature-card vivo-feature">
+                <div class="feature-icon">
+                    <i class="fas fa-dna"></i>
+                </div>
+                <div class="feature-content">
+                    <h3>Diagnostic Intelligent VIVO</h3>
+                    <p>Notre IA analyse les symptômes, l'historique médical et les données vitales pour fournir des diagnostics précis en temps réel avec une fiabilité de 98,7%.</p>
+                </div>
+            </div>
+            
+            <div class="feature-card veez-feature">
+                <div class="feature-icon">
+                    <i class="fas fa-rocket"></i>
+                </div>
+                <div class="feature-content">
+                    <h3>Accélération Patient VEEZ</h3>
+                    <p>Optimisez le parcours patient avec notre système intelligent de triage et de planification qui réduit les temps d'attente de 65% en moyenne.</p>
+                </div>
+            </div>
+            
+            <div class="feature-card vivo-feature">
+                <div class="feature-icon">
+                    <i class="fas fa-prescription-bottle-alt"></i>
+                </div>
+                <div class="feature-content">
+                    <h3>Prescription Sécurisée</h3>
+                    <p>Générez des ordonnances électroniques avec vérification automatique des interactions médicamenteuses et des contre-indications.</p>
+                </div>
+            </div>
+            
+            <div class="feature-card veez-feature">
+                <div class="feature-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <div class="feature-content">
+                    <h3>Données Sécurisées</h3>
+                    <p>Protection avancée des données patients avec cryptage blockchain et conformité RGPD/HIPAA pour une sécurité maximale.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Medical Dashboard -->
+    <section class="dashboard" id="dashboard">
+        <div class="section-title">
+            <h2>Plateforme Médicale Intégrée</h2>
+            <p>Accédez à nos outils d'IA pour améliorer votre pratique médicale</p>
+        </div>
+        
+        <div class="dashboard-container">
+            <div class="dashboard-header">
+                <h2><i class="fas fa-user-injured"></i> Dossier Patient - PAT-763</h2>
+                <div>Urgence: <span style="color:#ffcc00;font-weight:600">Prioritaire</span></div>
+            </div>
+            
+            <div class="dashboard-content">
+                <div class="vivo-section">
+                    <h3><i class="fas fa-stethoscope"></i> Diagnostic VIVO</h3>
+                    
+                    <div class="form-group">
+                        <label>Symptômes Présents</label>
+                        <div class="symptoms-grid">
+                            <div class="symptom-tag active">Fièvre</div>
+                            <div class="symptom-tag active">Toux</div>
+                            <div class="symptom-tag">Douleur thoracique</div>
+                            <div class="symptom-tag active">Frissons</div>
+                            <div class="symptom-tag">Essoufflement</div>
+                            <div class="symptom-tag">Nausées</div>
+                            <div class="symptom-tag">Vertiges</div>
+                            <div class="symptom-tag">Fatigue</div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Historique Médical</label>
+                        <input type="text" class="form-control" value="Hypertension, Allergie à la pénicilline">
+                    </div>
+                    
+                    <button class="btn btn-submit">Analyser avec VIVO IA</button>
+                    
+                    <div class="results">
+                        <h3><i class="fas fa-diagnoses"></i> Résultats du Diagnostic</h3>
+                        <p><strong>Diagnostic probable:</strong> Infection respiratoire bactérienne</p>
+                        <p><strong>Fiabilité:</strong> 96.2%</p>
+                        <p><strong>Recommandations:</strong> Examen pulmonaire complémentaire recommandé</p>
+                    </div>
+                </div>
+                
+                <div class="veez-section">
+                    <h3><i class="fas fa-prescription"></i> Prescription VEEZ</h3>
+                    
+                    <div class="form-group">
+                        <label>Traitement Recommandé</label>
+                        <input type="text" class="form-control" value="Amoxicilline - Antibiotique">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Posologie</label>
+                        <input type="text" class="form-control" value="500mg toutes les 8 heures pendant 7 jours">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Contre-indications vérifiées</label>
+                        <input type="text" class="form-control" value="Aucune contre-indication détectée">
+                    </div>
+                    
+                    <button class="btn btn-submit" style="background:var(--blue-gradient);">Générer Ordonnance</button>
+                    
+                    <div class="prescription">
+                        <h3><i class="fas fa-file-medical"></i> Ordonnance Électronique</h3>
+                        
+                        <div class="prescription-item">
+                            <span>Patient:</span>
+                            <strong>PAT-763 (42 ans)</strong>
+                        </div>
+                        <div class="prescription-item">
+                            <span>Date:</span>
+                            <strong id="current-date"></strong>
+                        </div>
+                        <div class="prescription-item">
+                            <span>Traitement:</span>
+                            <strong>Amoxicilline 500mg</strong>
+                        </div>
+                        <div class="prescription-item">
+                            <span>Posologie:</span>
+                            <strong>1 comprimé toutes les 8 heures</strong>
+                        </div>
+                        <div class="prescription-item">
+                            <span>Durée:</span>
+                            <strong>7 jours</strong>
+                        </div>
+                        <div class="prescription-item">
+                            <span>Signature:</span>
+                            <strong style="color:var(--veez-blue);">Dr. IA VIVO-MED</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <div class="footer-logo">VIVO & VEEZ</div>
+                <p>Solutions d'IA médicale de nouvelle génération pour les professionnels de santé et les patients.</p>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Liens Rapides</h4>
+                <ul class="footer-links">
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Accueil</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Fonctionnalités</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Tarifs</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Blog</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Contact</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Solutions</h4>
+                <ul class="footer-links">
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> VIVO Diagnostic</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> VEEZ Accélération</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Prescription IA</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Dossier Patient</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Triage Automatique</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Contact</h4>
+                <ul class="footer-links">
+                    <li><a href="#"><i class="fas fa-map-marker-alt"></i> Paris, France</a></li>
+                    <li><a href="#"><i class="fas fa-phone"></i> +33 1 23 45 67 89</a></li>
+                    <li><a href="#"><i class="fas fa-envelope"></i> contact@vivoveez.com</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>&copy; 2023 VIVO & VEEZ. Tous droits réservés. | Conçu avec <i class="fas fa-heart" style="color:var(--vivo-red);"></i> pour l'avenir de la médecine</p>
+        </div>
+    </footer>
+    
+    <script>
+        // Set current date in prescription
+        const now = new Date();
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+        document.getElementById('current-date').textContent = now.toLocaleDateString('fr-FR', options);
+        
+        // Symptom selection
+        const symptomTags = document.querySelectorAll('.symptom-tag');
+        symptomTags.forEach(tag => {
+            tag.addEventListener('click', () => {
+                tag.classList.toggle('active');
+            });
+        });
+        
+        // Form submission
+        const submitBtn = document.querySelector('.btn-submit');
+        submitBtn.addEventListener('click', () => {
+            const resultsDiv = document.querySelector('.results');
+            resultsDiv.innerHTML = `
+                <h3><i class="fas fa-diagnoses"></i> Résultats du Diagnostic</h3>
+                <p><strong>Diagnostic probable:</strong> Infection respiratoire bactérienne</p>
+                <p><strong>Fiabilité:</strong> 96.2%</p>
+                <p><strong>Recommandations:</strong> Examen pulmonaire complémentaire recommandé</p>
+                <p><strong>Traitement proposé:</strong> Amoxicilline 500mg toutes les 8 heures pendant 7 jours</p>
+            `;
+            
+            // Smooth scroll to results
+            resultsDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        });
+        
+        // Generate prescription
+        const generateBtn = document.querySelector('.btn-submit[style*="blue-gradient"]');
+        generateBtn.addEventListener('click', () => {
+            const prescriptionDiv = document.querySelector('.prescription');
+            prescriptionDiv.innerHTML = `
+                <h3><i class="fas fa-file-medical"></i> Ordonnance Électronique</h3>
+                <div class="prescription-item">
+                    <span>Patient:</span>
+                    <strong>PAT-763 (42 ans)</strong>
+                </div>
+                <div class="prescription-item">
+                    <span>Date:</span>
+                    <strong>${now.toLocaleDateString('fr-FR', options)}</strong>
+                </div>
+                <div class="prescription-item">
+                    <span>Diagnostic:</span>
+                    <strong>Infection respiratoire bactérienne</strong>
+                </div>
+                <div class="prescription-item">
+                    <span>Traitement:</span>
+                    <strong>Amoxicilline 500mg</strong>
+                </div>
+                <div class="prescription-item">
+                    <span>Posologie:</span>
+                    <strong>1 comprimé toutes les 8 heures</strong>
+                </div>
+                <div class="prescription-item">
+                    <span>Durée:</span>
+                    <strong>7 jours</strong>
+                </div>
+                <div class="prescription-item">
+                    <span>Contre-indications:</span>
+                    <strong>Aucune détectée</strong>
+                </div>
+                <div class="prescription-item">
+                    <span>Signature:</span>
+                    <strong style="color:var(--veez-blue);">Dr. IA VIVO-MED</strong>
+                </div>
+                <div style="margin-top: 20px; text-align: center;">
+                    <div style="display: inline-block; background: #f0f7ff; padding: 15px 30px; border-radius: 10px; font-family: monospace;">
+                        🔏 Hachage Blockchain: e773a0d5a1b2c3d4e5f6a7b8c9d0e1f2
+                    </div>
+                </div>
+            `;
+            
+            // Smooth scroll to prescription
+            prescriptionDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        });
+    </script>
+</body>
+</html>
